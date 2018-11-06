@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--enable aop annotation-->
+    <aop:aspectj-autoproxy/>
+
+    <!--scan packages-->
+    <context:component-scan base-package="controller, aop"/>
+
+    <mvc:annotation-driven validator="validator"/>
+
+    <bean id="methodValidationPostProcessor"
+          class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames" value="messages"/>
+    </bean>
+
+    <!--如果需要通过传参的方式指定国际化地区，需要使用以下代码 BEGIN-->
+    <!--<mvc:interceptors>-->
+        <!--&lt;!&ndash; 国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置 &ndash;&gt;-->
+        <!--<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
+            <!--<property name="paramName" value="lang"/>-->
+        <!--</bean>-->
+    <!--</mvc:interceptors>-->
+    <!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />-->
+    <!--如果需要通过传参的方式指定国际化地区，需要使用以下代码 END-->
+
+    <bean id="validator"
+          class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property
+                name="validationMessageSource"
+                ref="messageSource"/>
+        <property
+                name="providerClass"
+                value="org.hibernate.validator.HibernateValidator"/>
+    </bean>
+
+
+</beans>

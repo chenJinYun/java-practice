@@ -1,0 +1,15 @@
+
+esquid:S1192$"IDefine a constant instead of duplicating this literal "username" 5 times.(éœë¾øÿÿÿÿ
+]squid:S1192&"FDefine a constant instead of duplicating this literal "major" 3 times.(’´ø’
+]squid:S1192'"FDefine a constant instead of duplicating this literal "birth" 5 times.(ì»£Ú
+Dsquid:S1989"(Add a "try/catch" block for "getWriter".(øÏ×—ýÿÿÿÿ
+Osquid:S1989!"3Add a "try/catch" block for "setCharacterEncoding".(µŽ×‰üÿÿÿÿ
+Bsquid:S1989/"+Add a "try/catch" block for "sendRedirect".(ëÁÄ÷
+=squid:S1989A"&Add a "try/catch" block for "forward".(¶ù´Õ
+=squid:S1989A"&Add a "try/catch" block for "forward".(¶ù´Õ
+Dsquid:S1989C"(Add a "try/catch" block for "getWriter".(Ø’¬­øÿÿÿÿ
+bsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ÿ´ƒ
+bsquid:CommentedOutCodeLine "<This block of commented-out lines of code should be removed.(ç¬¾É
+O
+squid:S106)"9Replace this use of System.out or System.err by a logger.(Õƒ¶‡
+?squid:S1148>"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ

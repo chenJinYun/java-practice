@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--enable aop annotation-->
+    <aop:aspectj-autoproxy/>
+
+    <!--<bean id="validator"-->
+          <!--class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>-->
+
+    <!--scan packages-->
+    <context:component-scan base-package="controller, aop"/>
+
+    <mvc:annotation-driven validator="validator"/>
+
+
+
+    <bean id="methodValidationPostProcessor"
+          class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames" value="messages"/>
+    </bean>
+
+    <mvc:interceptors>
+        <!-- 国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置 -->
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang"/>
+        </bean>
+    </mvc:interceptors>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
+
+    <bean id="validator"
+          class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property
+                name="validationMessageSource"
+                ref="messageSource"/>
+        <property
+                name="providerClass"
+                value="org.hibernate.validator.HibernateValidator"/>
+    </bean>
+
+
+
+    <!--static resources-->
+    <!--<mvc:resources location="/" mapping="*.html"/>-->
+    <!--<mvc:resources location="/css/" mapping="/css/**"/>-->
+    <!--<mvc:resources location="/js/" mapping="/js/*.js"/>-->
+    <!--<mvc:resources location="/images/" mapping="/images/*.jpg"/>-->
+
+    <!--initialize DBCP datasource-->
+    <!--<bean id="datasource" class="org.apache.commons.dbcp2.BasicDataSource">-->
+    <!--<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>-->
+    <!--<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>-->
+    <!--<property name="username" value="burgess"/>-->
+    <!--<property name="password" value="Admin888"/>-->
+    <!--</bean>-->
+
+    <!--initialize Spring ORM-->
+    <!--<bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">-->
+    <!--<property name="databasePlatform" value="org.hibernate.dialect.Oracle8iDialect" />-->
+    <!--</bean>-->
+
+    <!--initialize Hibernate-->
+    <!--<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+    <!--<property name="dataSource" ref="datasource" />-->
+    <!--<property name="persistenceUnitName" value="entityManager"/>-->
+    <!--<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />-->
+    <!--<property name="packagesToScan" value="pojo" />-->
+    <!--<property name="jpaProperties">-->
+    <!--<props>-->
+    <!--<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>-->
+    <!--<prop key="hibernate.show_sql">true</prop>-->
+    <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
+    <!--</props>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--initialize JPA transaction manager-->
+    <!--<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">-->
+    <!--<property name="entityManagerFactory" ref="entityManagerFactory" />-->
+    <!--</bean>-->
+
+    <!--enable transaction annotation-->
+    <!--<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />-->
+
+</beans>

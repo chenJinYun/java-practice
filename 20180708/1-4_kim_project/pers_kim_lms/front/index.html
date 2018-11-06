@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+    <title>Title</title>
+</head>
+<body>
+<style type="text/css">
+    .div .query {
+         margin: 20px;
+    }
+    .div .book {
+         margin: 20px;
+    }
+    .div .delete{
+        margin: 20px;
+    }
+    table.tftable {
+        font-size: 12px;
+        color: #333333;
+        width: 100%;
+        border-width: 1px;
+        border-color: #729ea5;
+        border-collapse: collapse;
+    }
+
+    table.tftable th {
+        font-size: 12px;
+        background-color: #acc8cc;
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #729ea5;
+        text-align: left;
+    }
+
+    table.tftable tr {
+        background-color: #d4e3e5;
+    }
+
+    table.tftable td {
+        font-size: 12px;
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #729ea5;
+    }
+</style>
+<div class="div">
+    <div class="query">
+        书本id:<input type="text" class="id">
+        <button onclick="getOneBook()">查询</button>
+    </div>
+    <div class="book">
+        书本名字：<input type="text" class="name">
+        书本价格：<input type="text" class="price">
+        书本作者：<input type="text" class="author">
+        <button onclick="addBook()">添加</button>
+    </div>
+    <!--<div class="delete">-->
+        <!--书本id:<input type="text" class="uid">-->
+        <!--<button onclick="deleteBook()">删除</button>-->
+    <!--</div>-->
+
+</div>
+<table id="tfhover" class="tftable" border="1" >
+    <tr id="content">
+        <th>书名</th>
+        <th>价格</th>
+        <th>作者</th>
+    </tr>
+
+
+</table>
+
+</body>
+</html>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    // window.onload = function () {
+        getAllBook();
+
+        function getAllBook() {
+            //    获取表格列表数据
+            let list = "";
+            $.ajax({
+                url: 'http://localhost:9002/books',
+                type: 'get',
+                dataType: 'jsonp',  // 请求方式为jsonp
+                jsonpCallback: "onBack",    // 自定义回调函数名
+                data: {},
+                success: (res) => {
+                    if (res.length) {
+                        var insertHtml = "";
+                        for (let i = 0; i < res.length; i++) {
+                            insertHtml += `<tr><td>${res[i].book_name}</td><td>${res[i].price}</td><td>${res[i].author}</td></tr>`
+                        }
+                        $('#content').siblings("tr").remove();
+                        $('#content').after(insertHtml);
+                    }
+                }
+            });
+        }
+        function getOneBook(){
+            let id=document.getElementsByClassName("id")[0];
+            if(id.value){
+                //    获取表格列表数据
+                let list = "";
+                $.ajax({
+                    url: 'http://localhost:9002/books',
+                    type: 'get',
+                    dataType: 'jsonp',  // 请求方式为jsonp
+                    jsonpCallback: "onBack1",    // 自定义回调函数名
+                    data: {uid:id.value},
+                    success: (res) => {
+                        if (res) {
+                            var insertHtml = "";
+                            for (let i = 0; i < res.length; i++) {
+                                insertHtml += `<tr id="list"><td>${res[i].book_name}</td><td>${res[i].price}</td><td>${res[i].author}</td>`
+                            }
+                            $('#content').siblings("tr").remove();
+                            $('#content').after(insertHtml);
+                        } else{
+                            alert("找不到该书的信息")
+                        }
+                    }
+                });
+            } else{
+                getAllBook();
+            }
+        }
+        function addBook(){
+            let book_name=document.getElementsByClassName("name")[0];
+            let price=document.getElementsByClassName("price")[0];
+            let author=document.getElementsByClassName("author")[0];
+            try {
+                if(book_name.value&&price.value&&author.value){
+                    $.ajax({
+                        url: 'http://localhost:9002/books',
+                        type: 'post',
+                        // dataType: 'jsonp',  // 请求方式为jsonp
+                        // jsonpCallback: "onBack2",    // 自定义回调函数名
+                        data: {book_name: book_name.value, price: price.value, author: author.value},
+                    });
+                    getAllBook()
+                }else {
+                    alert("请先输入完整信息！")
+                }
+
+            } catch (e) {
+                console.log(e)
+                getAllBook()
+            }
+
+        }
+        function deleteBook(){
+            let uid=document.getElementsByClassName("uid")[0];
+            try {
+                $.ajax({
+                    url: 'http://localhost:9002/books',
+                    type: 'delete',
+                    data: {uid:uid},
+                });
+                getAllBook()
+            } catch (e) {
+                console.log(e)
+                getAllBook()
+            }
+        }
+
+    // }
+</script>

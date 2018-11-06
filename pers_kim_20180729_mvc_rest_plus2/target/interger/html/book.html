@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <style>
+        #addbtn {
+            float: right;
+            margin: 20px;
+        }
+
+        #bookList {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal" id="addbtn">添加
+    </button>
+
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">添加数据</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">名字</label>
+                            <input type="text" class="form-control name" id="exampleInputEmail1" placeholder="请输入名字">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">价格</label>
+                            <input type="text" class="form-control price" id="exampleInputPassword1"
+                                   placeholder="请输入价格">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">出版日期</label>
+                            <input type="date" id="exampleInputFile" class=" form-control publishDate"
+                                   placeholder="请输入出版日期">
+                        </div>
+                        <div class="form-group">
+                            <label for="author1">作者</label>
+                            <input type="text" id="author1" class="form-control author" placeholder="请输入作者">
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="add" class="btn btn-success">添加</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+</div>
+<div id="bookList">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>price</th>
+            <th>publishDate</th>
+            <th>author</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="list_tbody"></tbody>
+    </table>
+</div>
+<div>
+    <div id="updateModel" class="modal fade" tabindex="-2" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">更新数据</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">名字</label>
+                            <input type="text" class="form-control name" id="name" placeholder="请输入名字">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">价格</label>
+                            <input type="text" class="form-control price" id="price" placeholder="请输入价格">
+                        </div>
+                        <div class="form-group">
+                            <label for="publishDate">出版日期</label>
+                            <input type="date" id="publishDate" class="publishDate" placeholder="请输入出版日期">
+                        </div>
+                        <div class="form-group">
+                            <label for="author">作者</label>
+                            <input type="text" id="author" class="author" placeholder="请输入作者">
+                        </div>
+                        <input type="hidden" id="id">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="update" class="btn btn-success">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    function BookManager(tbody) {
+        this.data = null;
+        this.tbody = tbody;
+        let that = this;
+        this.render = function () {
+            if (this.tbody) this.tbody.remove();
+            this.tbody = $("<tbody></tbody>");
+            this.data.forEach((book) => {
+                let tr = $("<tr></tr>");
+                for (let key in book) {
+                    let idTd = $("<td></td>");
+                    idTd.text(book[key]);
+                    tr.append(idTd);
+                }
+                let btn = $("<button></button>");
+                btn.text("删除");
+                btn.addClass("btn btn-danger");
+                btn.on("click", (e) => {
+                    this.deleteBook(book.id);
+                });
+                tr.on("dblclick", (e) => {
+                    for (let key in book) {
+                        $("#" + key).val(book[key]);
+                    }
+                    $("#updateModel").modal();
+                });
+                let btnTd = $("<td></td>");
+                btnTd.append(btn);
+                tr.append(btnTd);
+                this.tbody.append(tr);
+            });
+            $("#bookList table").append(this.tbody);
+        };
+        this.deleteBook = function (u) {
+            opBook("DELETE", null, "/books/" + u)
+        };
+        this.addBook = function (u) {
+            opBook("POST", u)
+        };
+        this.updateBook = function (u) {
+            opBook("PUT", u)
+        };
+        this.getData = function () {
+            opBook("GET", null)
+        };
+
+        function opBook(type, data, url) {
+            $.ajax({
+                method: type,
+                url: url || "/books",
+                contentType: "application/json",
+                data: data ? JSON.stringify(data) : null,
+                success: (res) => {
+                    if (!Array.isArray(res) && res) {
+                        that.getData();
+                    } else {
+                        that.data = res;
+                        that.render();
+                    }
+                }
+            });
+        }
+    }
+
+    $(function () {
+        let bookMagager = new BookManager($("#list_tbody"));
+        bookMagager.getData();
+        //add
+        $("#add").on("click", () => {
+            let name = $(".name");
+            let publishDate = $(".publishDate");
+            let author = $(".author");
+            let price = $(".price");
+            bookMagager.addBook({
+                name: name.val(),
+                author: author.val(),
+                price: price.val(),
+                publishDate: publishDate.val()
+            });
+            $('#myModal').modal('hide');
+            $(".form-group input").val("");
+        })
+        //update
+        $("#update").on("click", () => {
+            let id = $("#id");
+            let name = $("#name");
+            let author = $("#author");
+            let price = $("#price");
+            let publishDate = $("#publishDate");
+            bookMagager.updateBook({
+                id: id.val(),
+                name: name.val(),
+                author: author.val(),
+                price: price.val(),
+                publishDate: publishDate.val()
+            })
+            $("#updateModel").modal('hide');
+        })
+    })
+</script>

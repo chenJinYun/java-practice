@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+</head>
+<body>
+<div>
+    name:<input type="text" name="name">
+    price:<input type="text" name="price">
+    publishDate:<input type="text" name="publishDate">
+    author:<input type="text" name="author">
+    <button id="add">添加</button>
+</div>
+<div id="bookList">
+    <table>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>price</th>
+            <th>publishDate</th>
+            <th>author</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<div>
+    name:<input type="text" id="name">
+    price:<input type="text" id="price">
+    publishDate:<input type="date" id="publishDate">
+    author:<input type="text" id="author">
+    <input type="hidden" id="id">
+    <button id="update">更新</button>
+</div>
+</body>
+</html>
+<script>
+    function BookManager(table) {
+        this.data = null;
+        this.table=table;
+        this.render = function () {
+            let tbody = this.table.children("tbody");
+            console.log(tbody)
+            if (tbody) tbody.remove();
+            tbody = document.createElement("tbody");
+            this.data.forEach((book) => {
+                let tr = document.createElement("tr");
+                let idTd = document.createElement("td");
+                let nameTd = document.createElement("td");
+                let priceTd = document.createElement("td");
+                let publishDateTd = document.createElement("td");
+                let authorTd = document.createElement("td");
+                idTd.textContent = book.id;
+                nameTd.textContent = book.name;
+                priceTd.textContent = book.price;
+                publishDateTd.textContent = book.publishDate;
+                authorTd.textContent = book.author;
+                tr.append(idTd);
+                tr.append(nameTd);
+                tr.append(priceTd);
+                tr.append(publishDateTd);
+                tr.append(authorTd);
+                let btn = document.createElement("button");
+                btn.textContent = "删除";
+                btn.addEventListener("click", (e) => {
+                    this.deleteBook(book.id);
+                });
+                nameTd.addEventListener("dblclick",(e)=>{
+                    document.querySelector("#id").value=book.id;
+                    document.querySelector("#name").value=book.name;
+                    document.querySelector("#price").value=book.price;
+                    document.querySelector("#publishDate").value=book.publishDate;
+                    document.querySelector("#author").value=book.author;
+                });
+                let btnTd = document.createElement("td");
+                btnTd.appendChild(btn);
+                tr.appendChild(btnTd);
+                tbody.append(tr);
+            });
+            document.querySelector("#bookList table").appendChild(tbody);
+        };
+        this.deleteBook = function (u) {
+            this.opBook("DELETE",null,"/books/"+u)
+
+        };
+        this.addBook= function (u) {
+            this.opBook("POST",u)
+
+        };
+        this.updateBook=function (u) {
+            this.opBook("PUT",u)
+        };
+        this.getData = function () {
+          this.opBook("GET",null)
+        };
+        this.opBook=function (type,data,url) {
+            $.ajax({
+                method: type,
+                url: url||"/books",
+                data: data,
+                success: (res) => {
+                    this.data = res;
+                    this.render()
+                }
+            });
+        }
+    }
+
+    $(function () {
+        let bookMagager = new BookManager($("table"));
+        bookMagager.getData();
+        //add
+        document.querySelector("#add").addEventListener("click", () => {
+            let name = document.getElementsByName("name")[0];
+            let publishDate = document.getElementsByName("publishDate")[0];
+            let author = document.getElementsByName("author")[0];
+            let price = document.getElementsByName("price")[0];
+            bookMagager.addBook({name:name.value,author:author.value,price:price.value,publishDate:publishDate.value});
+            name.value='';
+            price.value='';
+            author.value='';
+            publishDate.value='';
+        })
+        //update
+        document.querySelector("#update").addEventListener("click",()=>{
+            let id=document.querySelector("#id");
+            let name=document.querySelector("#name").value;
+            let author=document.querySelector("#author").value;
+            let price=document.querySelector("#price").value;
+            let publishDate=document.querySelector("#publishDate").value;
+            bookMagager.updateBook({id:id.value,name:name.value,author:author.value,price:price.value,publishDate:publishDate.value})
+            id.value='';
+            name.value='';
+            author.value='';
+            price.value='';
+            publishDate.value='';
+        })
+    })
+</script>

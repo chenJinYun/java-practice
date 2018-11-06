@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <mvc:annotation-driven conversion-service="conversionService"/>
+    <!--<context:component-scan base-package="userCrotrol"/>-->
+    <context:component-scan base-package="pers.kim.mvc_rest_plus"/>
+
+    <aop:aspectj-autoproxy/>
+
+    <mvc:resources location="/html/" mapping="/html/**"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+        <property name="username" value="kim"></property>
+        <property name="password" value="123456"></property>
+    </bean>
+
+    <bean class="org.springframework.jdbc.core.JdbcTemplate" id="template">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <!--<property name="converters">-->
+            <!--<set>-->
+                <!--<bean class="urlDemo.DateConverter"></bean>-->
+            <!--</set>-->
+        <!--</property>-->
+        <!--<property name="formatters">-->
+            <!--<set>-->
+                <!--<bean class="urlDemo.DateFormatter"></bean>-->
+            <!--</set>-->
+        <!--</property>-->
+    </bean>
+    <!--<bean name="/users" class="userCrotrol.UserController"></bean>-->
+    <!--<bean name="/login" class="userCrotrol.LoginController"></bean>-->
+    <!--<bean name="/loginSub" class="userCrotrol.LoginSubController"></bean>-->
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="order" value="1"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver"></bean>-->
+    <!-- more bean definitions go here -->
+
+</beans>

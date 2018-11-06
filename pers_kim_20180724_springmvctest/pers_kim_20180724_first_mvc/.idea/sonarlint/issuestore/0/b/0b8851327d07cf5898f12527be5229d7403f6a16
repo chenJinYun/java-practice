@@ -1,0 +1,12 @@
+
+Fsquid:S1148-"#Use a logger to log this exception.(А╔╘Е¤    8╦лет╠,
+Fsquid:S11486"#Use a logger to log this exception.(А╔╘Е¤    8╦лет╠,
+Rsquid:EmptyStatementUsageCheckM"Remove this empty statement.(ЇЯОь·    8╦лет╠,
+Rsquid:EmptyStatementUsageCheckP"Remove this empty statement.(ЇЯОь·    8╦лет╠,
+V
+squid:S106["9Replace this use of System.out or System.err by a logger.(╖╨аУ8╦лет╠,
+Rsquid:EmptyStatementUsageCheckS"Remove this empty statement.(ЇЯОь·    8╦лет╠,
+Fsquid:S1148B"#Use a logger to log this exception.(А╔╘Е¤    8╦лет╠,
+Fsquid:S1148U"#Use a logger to log this exception.(А╔╘Е¤    8╦лет╠,
+Fsquid:S1148D"#Use a logger to log this exception.(А╔╘Е¤    8╦лет╠,
+bsquid:S2147C"DCombine this catch with the one at line 65, which has the same body.(╔огЭ8╦лет╠,

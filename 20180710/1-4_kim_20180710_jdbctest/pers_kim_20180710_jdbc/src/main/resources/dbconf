@@ -1,0 +1,7 @@
+url=jdbc:oracle:thin:@localhost:1521:xe
+username=kim
+userWord=123456
+joinClass=oracle.jdbc.driver.OracleDriver
+initSize=10
+minidle=100
+maxActive=100

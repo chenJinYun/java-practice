@@ -1,0 +1,1 @@
+由于压缩包过大，我没有提交前端的node_modules文件，需要先npm install，把前端的jq和bootstrap依赖包下载

@@ -1,0 +1,10 @@
+
+Bsquid:S1075"&Remove this hard-coded path-delimiter.(ÔÀ—ıÿÿÿÿ
+Bsquid:S1075 "&Remove this hard-coded path-delimiter.(÷…±şÿÿÿÿ
+isquid:S2095!"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(„Ñ¬Åûÿÿÿÿ
+jsquid:S2095""NUse try-with-resources or close this "FileOutputStream" in a "finally" clause.(Ô“¥˜ùÿÿÿÿ
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(´æÙÿÿÿÿÿ
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ù‰ıÿÿÿÿ
+`squid:S2674$"JCheck the return value of the "read" call to see how many bytes were read.(·Ö
+Vsquid:S1118":Add a private constructor to hide the implicit public one.(ÎÛ¾üÿÿÿÿ
+csquid:UselessImportCheck":Remove this unused import 'java.io.FileNotFoundException'.(·î™ùÿÿÿÿ

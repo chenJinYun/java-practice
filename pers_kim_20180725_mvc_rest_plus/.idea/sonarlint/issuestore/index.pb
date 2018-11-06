@@ -1,0 +1,25 @@
+
+O
+src/main/webapp/html/js/book.js,7\f\7f2554ad0775f0f0682738e60ceba6b11cb34185
+_
+/src/main/resources/spring/dispatcher-config.xml,8\1\81874dbe27f8769c0deef95d7ab6a2f3d56d646a
+c
+3src/main/java/pers/kim/mvc_rest_plus/pojo/Book.java,5\8\584faaea7df0e20c42a419e1c3e5d3ae655963e4
+e
+5src/main/java/pers/kim/mvc_rest_plus/dao/BookDao.java,5\a\5ac7c71ae34d3357c602205783eaf19b0fed6661
+m
+=src/main/java/pers/kim/mvc_rest_plus/service/BookManager.java,2\0\20601c9e782a196e09b2d27f5cdb689d68c50bca
+i
+9src/main/java/pers/kim/mvc_rest_plus/dao/BookDaoImpl.java,7\e\7ef660ec7f3cfecafa56a73acba2cea52230c82a
+s
+Csrc/main/java/pers/kim/mvc_rest_plus/service/BookManageService.java,d\2\d2864f09f7cf0a826fee2011cd978661741aace9
+s
+Csrc/main/java/pers/kim/mvc_rest_plus/controller/BookController.java,2\5\25feaaf3c866f07b1db029feecf076e05065f5b8
+h
+8src/main/test/testBookManagement/TestBookManagement.java,1\f\1fd5eb2336b6caf12c614cf46fb61c0ccff56005
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+O
+src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
+i
+9src/main/java/pers/kim/mvc_rest_plus/BookAop/BookLog.java,4\9\495712dab46cb8321b3268cb196997efc3da241a

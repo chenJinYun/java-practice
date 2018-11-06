@@ -1,0 +1,7 @@
+﻿实现的功能：加载静态资源，404页面，本机多开服务重定向
+
+1、加载静态资源：
+  访问首页包含（html文件，js文件，css文件）:localhost:9001
+  访问其他页面：localhost:9001/text.html   具体文件在file文件夹，这个文件夹下的都可以访问
+  重定向页面：localhost:9001/test.html, 前提先开pers_kim_statichttpserver1服务
+  404页面：localhost:9001/11.html
